@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Encabezado del Post -->
+        <ImageView
+            android:id="@+id/ivUserProfilePost"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" /> <!-- Placeholder -->
+
+        <TextView
+            android:id="@+id/tvUsernamePost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivUserProfilePost"
+            app:layout_constraintStart_toEndOf="@+id/ivUserProfilePost"
+            app:layout_constraintTop_toTopOf="@+id/ivUserProfilePost"
+            app:layout_constraintEnd_toStartOf="@id/ivPostOptions"
+            tools:text="nombre_usuario" />
+
+        <ImageView
+            android:id="@+id/ivPostOptions"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/ivUserProfilePost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivUserProfilePost"
+            android:src="@drawable/post_options" />
+
+
+        <!-- Imagen Principal del Post -->
+        <ImageView
+            android:id="@+id/ivPostImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivUserProfilePost"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <!-- Acciones del Post -->
+        <ImageView
+            android:id="@+id/ivLikeButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivPostImage"
+            android:src="@drawable/like_placeholder" /> <!-- Necesitarás íconos de like -->
+
+        <ImageView
+            android:id="@+id/ivCommentButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/ivLikeButton"
+            app:layout_constraintTop_toTopOf="@+id/ivLikeButton"
+            android:src="@drawable/comment_placeholder" />
+        <ImageView
+            android:id="@+id/ivShareButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/ivCommentButton"
+            app:layout_constraintTop_toTopOf="@+id/ivCommentButton"
+            android:src="@drawable/send_placeholder" />
+        <ImageView
+            android:id="@+id/ivSaveButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivShareButton"
+            android:src="@drawable/favorite_placeholder" />
+
+        <!-- Likes y Descripción -->
+        <TextView
+            android:id="@+id/tvLikesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivLikeButton"
+            tools:text="1,234 Me gusta" />
+
+        <TextView
+            android:id="@+id/tvPostCaption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLikesCount"
+            tools:text="Esta es una descripción de ejemplo para la publicación. #ejemplo #android" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
