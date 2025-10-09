@@ -68,8 +68,14 @@ class CreatePostActivity : AppCompatActivity() {
 
         buttonClose.setOnClickListener { finish() }
         buttonNext.setOnClickListener {
-            // TODO: Crear una nueva actividad para editar y publicar
-            Toast.makeText(this, "Ir a la siguiente pantalla", Toast.LENGTH_SHORT).show()
+            // ************ MODIFICACIÓN AQUÍ ************
+            selectedImageUri?.let { uri ->
+                val intent = Intent(this, PublishPostActivity::class.java).apply {
+                    // Se pasa la URI como String para que la reciba la siguiente Activity
+                    putExtra("IMAGE_URI", uri.toString())
+                }
+                startActivity(intent)
+            } ?: Toast.makeText(this, "Selecciona una imagen primero", Toast.LENGTH_SHORT).show()
         }
 
         // El flujo de permisos de almacenamiento inicia aquí

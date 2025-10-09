@@ -72,7 +72,8 @@ class FeedActivity : AppCompatActivity() {
           true
         }
         R.id.nav_search -> {
-          Toast.makeText(this, "Ir a Búsqueda", Toast.LENGTH_SHORT).show()
+          val intent = Intent(this, SearchActivity::class.java)
+          startActivity(intent)
           true
         }
         R.id.nav_newPost -> {
