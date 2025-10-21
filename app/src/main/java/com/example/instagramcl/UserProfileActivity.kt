@@ -1,5 +1,6 @@
 package com.example.instagramcl
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 
-class UserProfileActivity : AppCompatActivity() {
+class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener {
 
   private lateinit var imageViewProfile: ImageView
   private lateinit var textViewUsername: TextView
@@ -38,6 +39,13 @@ class UserProfileActivity : AppCompatActivity() {
   // El ID del usuario logeado
   private var currentUserId: String? = auth.currentUser?.uid
 
+
+  override fun onPostClick(postId: String) {
+    val intent = Intent(this, PostDetailActivity::class.java).apply {
+      putExtra("POST_ID", postId)
+    }
+    startActivity(intent)
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -68,7 +76,7 @@ class UserProfileActivity : AppCompatActivity() {
 
     // 2. Configurar RecyclerView
     recyclerViewUserPosts.layoutManager = LinearLayoutManager(this)
-    postAdapter = PostAdapter(this, postList) // Asumiendo que PostAdapter toma Context y List<Post>
+    postAdapter = PostAdapter(this, postList ,this) // Asumiendo que PostAdapter toma Context y List<Post>
     recyclerViewUserPosts.adapter = postAdapter
 
     // 3. Cargar Datos y Listeners
@@ -94,6 +102,7 @@ class UserProfileActivity : AppCompatActivity() {
         if (document.exists()) {
           val user = document.toObject(User::class.java)
           textViewUsername.text = user?.username
+
           Glide.with(this)
             .load(user?.profileImageUrl)
             .placeholder(R.drawable.image_placeholder)
@@ -119,13 +128,18 @@ class UserProfileActivity : AppCompatActivity() {
       .document(targetUserId!!)
       .get()
       .addOnSuccessListener { document ->
-        // Si el documento existe, significa que el usuario logeado YA lo sigue
+        // Si el documento existe, significa que el usuario logeado YA lo sigue (DEJAR DE SEGUIR)
         if (document.exists()) {
           buttonFollow.text = "Dejar de Seguir"
-          buttonFollow.setBackgroundColor(getColor(R.color.black)) // Cambiar a color neutral
+          // **CAMBIO AQUI: Fondo Blanco, Letras Negras**
+          buttonFollow.setBackgroundColor(Color.WHITE)
+          buttonFollow.setTextColor(Color.BLACK)
         } else {
+          // Si NO existe, significa que el usuario logeado NO lo sigue (SEGUIR)
           buttonFollow.text = "Seguir"
-          buttonFollow.setBackgroundColor(getColor(R.color.black)) // Color primario
+          // **CAMBIO AQUI: Fondo Negro, Letras Blancas**
+          buttonFollow.setBackgroundColor(Color.BLACK)
+          buttonFollow.setTextColor(Color.WHITE)
         }
       }
   }
@@ -189,7 +203,10 @@ class UserProfileActivity : AppCompatActivity() {
         postList.clear()
         if (snapshots != null) {
           for (document in snapshots.documents) {
-            val post = document.toObject(Post::class.java)
+            val post = document.toObject(Post::class.java)?.apply {
+              // ¡CRUCIAL! Asegúrate de que el ID del documento esté aquí
+              postId = document.id
+            }
             if (post != null) {
               postList.add(post)
             }

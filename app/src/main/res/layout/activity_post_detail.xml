@@ -1,0 +1,130 @@
+<!-- res/layout/activity_post_detail.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostDetailActivity">
+
+    <!-- CONTENIDO DEL POST (OCUPA EL ESPACIO SOBRE LA BARRA DE COMENTARIOS) -->
+    <ScrollView
+        android:id="@+id/postContentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/commentBarLayout"> <!-- Clave: se posiciona arriba de la barra -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"> <!-- Añadimos padding para que el último elemento no quede pegado -->
+
+            <!-- Header con imagen de perfil y nombre de usuario -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/ivDetailProfileImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/tvDetailUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textStyle="bold"
+                    tools:text="nombre_usuario" />
+            </LinearLayout>
+
+            <!-- Imagen principal del post -->
+            <ImageView
+                android:id="@+id/ivDetailPostImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <!-- Descripción del post -->
+            <TextView
+                android:id="@+id/tvDetailDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                tools:text="Esta es una descripción larga y detallada de la foto que se está mostrando arriba." />
+
+            <!-- Fecha de publicación -->
+            <TextView
+                android:id="@+id/tvDetailTimestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="12dp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                tools:text="20 de octubre de 2025" />
+
+            <!-- Aquí podrías agregar un RecyclerView para mostrar los comentarios existentes -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="12dp"
+                android:text="Comentarios"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_comment" />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <!-- BARRA PARA AÑADIR COMENTARIOS (ANCLADA AL FONDO) -->
+    <LinearLayout
+        android:id="@+id/commentBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- ESTE ES EL EditText QUE FALTABA -->
+        <EditText
+            android:id="@+id/etCommentInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="Añade un comentario..."
+            android:inputType="textCapSentences"
+            android:maxLines="4" /> <!-- Estilo limpio -->
+
+        <!-- ESTE ES EL BOTÓN QUE FALTABA -->
+        <Button
+            android:id="@+id/btnPostComment"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Publicar"
+            android:textColor="?attr/colorPrimary" />
+
+    </LinearLayout>
+
+</RelativeLayout>

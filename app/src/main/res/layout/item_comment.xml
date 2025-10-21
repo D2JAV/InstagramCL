@@ -1,0 +1,37 @@
+<!-- res/layout/item_comment.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/ivCommentUserProfile"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvCommentUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/ivCommentUserProfile"
+        android:layout_marginStart="8dp"
+        android:textStyle="bold"
+        tools:text="nombre_usuario" />
+
+    <TextView
+        android:id="@+id/tvCommentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tvCommentUsername"
+        android:layout_alignTop="@id/tvCommentUsername"
+        android:layout_marginStart="6dp"
+        tools:text="Este es un comentario de ejemplo." />
+
+</RelativeLayout>

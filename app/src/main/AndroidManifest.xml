@@ -28,6 +28,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InstagramCL">
         <activity
+            android:name=".PostDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".PublishPostActivity"
             android:exported="false" />
         <activity
@@ -41,8 +44,8 @@
             android:exported="false" />
         <activity
             android:name=".SearchActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".UserProfileActivity"
             android:exported="false" />

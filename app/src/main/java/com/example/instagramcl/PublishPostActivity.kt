@@ -97,7 +97,6 @@ class PublishPostActivity : AppCompatActivity() {
       caption = editTextCaption.text.toString().trim(),
       //location = editTextLocation.text.toString().trim(),
       imageUrl = imageUrl,
-      likes = 0, // Inicialmente 0 likes
       userId = userId,
       username = username,
       userProfileImageUrl = userProfileImageUrl,
