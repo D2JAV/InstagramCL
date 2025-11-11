@@ -31,6 +31,10 @@ class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener
   private lateinit var postAdapter: PostAdapter // Reutiliza tu adaptador de posts
   private var postList: MutableList<Post> = mutableListOf()
 
+  private lateinit var textViewPostCount: TextView
+  private lateinit var textViewFollowersCount: TextView
+  private lateinit var textViewFollowingCount: TextView
+
   private val auth = FirebaseAuth.getInstance()
   private val db = FirebaseFirestore.getInstance()
 
@@ -73,6 +77,10 @@ class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener
     buttonBack = findViewById(R.id.buttonBack)
     recyclerViewUserPosts = findViewById(R.id.recyclerViewUserPosts)
     textViewNoPosts = findViewById(R.id.textViewNoPosts)
+    textViewPostCount = findViewById(R.id.textViewPostCount)
+    textViewFollowersCount = findViewById(R.id.textViewFollowersCount)
+    textViewFollowingCount = findViewById(R.id.textViewFollowingCount)
+
 
     // 2. Configurar RecyclerView
     recyclerViewUserPosts.layoutManager = LinearLayoutManager(this)
@@ -93,6 +101,8 @@ class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener
 
     loadUserProfile()
     loadUserPosts()
+    loadUserStats()
+
   }
 
   private fun loadUserProfile() {
@@ -115,6 +125,49 @@ class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener
       .addOnFailureListener { e ->
         Log.e("UserProfile", "Error loading user profile", e)
         Toast.makeText(this, "Error al cargar perfil.", Toast.LENGTH_SHORT).show()
+      }
+  }
+
+
+  private fun loadUserStats() {
+    if (targetUserId == null) return
+
+    //   1. Contar publicaciones
+    db.collection("posts")
+      .whereEqualTo("userId", targetUserId)
+      .get()
+      .addOnSuccessListener { querySnapshot ->
+        val postCount = querySnapshot.size()
+        textViewPostCount.text = postCount.toString()
+      }
+      .addOnFailureListener { e ->
+        Log.e("UserProfile", "Error al contar posts: ${e.message}")
+      }
+
+    //   2. Contar seguidores
+    db.collection("followers")
+      .document(targetUserId!!)
+      .collection("userFollowers")
+      .get()
+      .addOnSuccessListener { querySnapshot ->
+        val followersCount = querySnapshot.size()
+        textViewFollowersCount.text = followersCount.toString()
+      }
+      .addOnFailureListener { e ->
+        Log.e("UserProfile", "Error al contar seguidores: ${e.message}")
+      }
+
+    // 3 . Contar seguidos
+    db.collection("following")
+      .document(targetUserId!!)
+      .collection("userFollowing")
+      .get()
+      .addOnSuccessListener { querySnapshot ->
+        val followingCount = querySnapshot.size()
+        textViewFollowingCount.text = followingCount.toString()
+      }
+      .addOnFailureListener { e ->
+        Log.e("UserProfile", "Error al contar seguidos: ${e.message}")
       }
   }
 
@@ -156,6 +209,7 @@ class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener
       // Acción: Dejar de Seguir
       unfollowUser()
     }
+
   }
 
   private fun followUser() {
@@ -171,6 +225,8 @@ class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener
 
         Toast.makeText(this, "¡Siguiendo a ${textViewUsername.text}!", Toast.LENGTH_SHORT).show()
         loadFollowStatus() // Actualiza el botón
+
+        loadUserStats()
       }
   }
 
@@ -187,6 +243,8 @@ class UserProfileActivity : AppCompatActivity(), PostAdapter.OnPostClickListener
 
         Toast.makeText(this, "Dejaste de seguir a ${textViewUsername.text}.", Toast.LENGTH_SHORT).show()
         loadFollowStatus() // Actualiza el botón
+
+        loadUserStats()
       }
   }
 

@@ -120,7 +120,6 @@ class PostDetailActivity : AppCompatActivity() {
           }
       }
   }
-
   private fun postComment(text: String) {
     val currentUserId = auth.currentUser?.uid
     if (currentUserId == null) {
@@ -128,36 +127,38 @@ class PostDetailActivity : AppCompatActivity() {
       return
     }
 
-    // Deshabilitar el botón para evitar envíos duplicados
-    btnPostComment.isEnabled = false
+    btnPostComment.isEnabled = false // Evita doble clic
 
-    // La ruta será: posts/{postId}/comments/{commentId}
-    val commentsCollection = db.collection("posts").document(postId!!).collection("comments")
-    val commentId = commentsCollection.document().id // Generar un ID único para el comentario
+    val postRef = db.collection("posts").document(postId!!)
+    val commentsCollection = postRef.collection("comments")
+    val commentId = commentsCollection.document().id
 
     val newComment = Comment(
       commentId = commentId,
       postId = postId!!,
       userId = currentUserId,
       text = text
-      // El timestamp se añade automáticamente por el servidor
     )
 
+    // --- 1️⃣ Guardar el comentario en la subcolección ---
     commentsCollection.document(commentId).set(newComment)
       .addOnSuccessListener {
+        // --- 2️⃣ Incrementar el contador de comentarios ---
+        postRef.update("commentsCount", com.google.firebase.firestore.FieldValue.increment(1))
+          .addOnFailureListener { e ->
+            Log.e("PostDetailActivity", "Error al incrementar contador: ${e.message}")
+          }
+
         Toast.makeText(this, "Comentario publicado.", Toast.LENGTH_SHORT).show()
-        etCommentInput.text.clear() // Limpiar el campo de texto
-        // Aquí podrías agregar lógica para refrescar la lista de comentarios
+        etCommentInput.text.clear()
       }
       .addOnFailureListener { e ->
         Toast.makeText(this, "Error al publicar: ${e.message}", Toast.LENGTH_SHORT).show()
       }
       .addOnCompleteListener {
-        // Volver a habilitar el botón
         btnPostComment.isEnabled = true
       }
   }
-
 
   private fun loadPostDetails() {
     val postRef = db.collection("posts").document(postId!!)

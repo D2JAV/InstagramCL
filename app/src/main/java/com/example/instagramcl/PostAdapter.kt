@@ -50,6 +50,8 @@ class PostAdapter(
     private val db = FirebaseFirestore.getInstance()
     private val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
+    private val tvCommentsCount: TextView = itemView.findViewById(R.id.tvCommentsCount)
+
     init {
       // Listener para abrir el detalle del post
       itemView.setOnClickListener {
@@ -73,8 +75,11 @@ class PostAdapter(
       tvPostDescription.text = post.caption
       Glide.with(context).load(post.imageUrl).into(ivPostImage)
 
-      // --- LÓGICA PARA MOSTRAR LIKES E ÍCONO ---
+      //mostrar likes
       updateLikeStatus(post, currentUserId)
+
+      //mostrar comentarios
+      tvCommentsCount.text = "${post.commentsCount} comentarios"
 
       // Cargar datos del usuario
       loadUserData(post.userId)

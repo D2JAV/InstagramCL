@@ -47,10 +47,7 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnPostClickListener {
     fetchPosts()
   }
 
-  /**
-   * Implementación del método de la interfaz OnPostClickListener.
-   * Esto se ejecuta cuando el adaptador notifica un clic.
-   */
+  //cuando se da click en un post
   override fun onPostClick(postId: String) {
     // Iniciar la actividad de detalle y pasar el ID del post
     val intent = Intent(this, PostDetailActivity::class.java).apply {
@@ -108,10 +105,7 @@ class FeedActivity : AppCompatActivity(), PostAdapter.OnPostClickListener {
           goToCreatePostActivity()
           true
         }
-        R.id.nav_reels -> {
-          Toast.makeText(this, "Ir a reels", Toast.LENGTH_SHORT).show()
-          true
-        }
+
         R.id.nav_profile -> {
           val currentUserId = auth.currentUser?.uid
           if (currentUserId != null) {

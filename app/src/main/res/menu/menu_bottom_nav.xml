@@ -17,10 +17,6 @@
         android:title="Agregar post" />
 
     <item
-        android:id="@+id/nav_reels"
-        android:icon="@drawable/reels64"
-        android:title="Reels" />
-    <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/user"
         android:title="Perfil" />

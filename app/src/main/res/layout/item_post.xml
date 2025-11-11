@@ -32,8 +32,9 @@
             app:layout_constraintBottom_toBottomOf="@+id/ivUserProfilePost"
             app:layout_constraintStart_toEndOf="@+id/ivUserProfilePost"
             app:layout_constraintTop_toTopOf="@+id/ivUserProfilePost"
-            app:layout_constraintEnd_toStartOf="@id/ivPostOptions"
             tools:text="nombre_usuario" />
+
+        <!--
 
         <ImageView
             android:id="@+id/ivPostOptions"
@@ -45,6 +46,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivUserProfilePost"
             android:src="@drawable/post_options" />
+
+        -->
 
 
         <!-- Imagen Principal del Post -->
@@ -80,6 +83,9 @@
             app:layout_constraintStart_toEndOf="@+id/ivLikeButton"
             app:layout_constraintTop_toTopOf="@+id/ivLikeButton"
             android:src="@drawable/comment_placeholder" />
+        <!--
+
+
         <ImageView
             android:id="@+id/ivShareButton"
             android:layout_width="32dp"
@@ -97,6 +103,9 @@
             app:layout_constraintTop_toTopOf="@+id/ivShareButton"
             android:src="@drawable/favorite_placeholder" />
 
+
+        -->
+
         <!-- Likes y Descripción -->
         <TextView
             android:id="@+id/tvLikesCount"
@@ -108,6 +117,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivLikeButton"
             tools:text="1,234 Me gusta" />
+
+        <TextView
+            android:id="@+id/tvCommentsCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tvLikesCount"
+            app:layout_constraintTop_toTopOf="@+id/tvLikesCount"
+            tools:text="45 comentarios" />
 
         <TextView
             android:id="@+id/tvPostCaption"

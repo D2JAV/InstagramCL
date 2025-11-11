@@ -1,10 +1,7 @@
 package com.example.instagramcl
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.content.Intent
 import android.widget.Button
 import android.widget.EditText
@@ -16,7 +13,6 @@ class LoginActivity : AppCompatActivity() {
   * usuario de prueba: test@example.com
   * contraseña: password123
   * */
-
   private lateinit var auth: FirebaseAuth
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
     registerButton.setOnClickListener {
       val intent = Intent(this, RegisterActivity::class.java)
       startActivity(intent)
-     // Toast.makeText(this, "Navegando a la pantalla de registro...", Toast.LENGTH_SHORT).show()
+      Toast.makeText(this, "Navegando a la pantalla de registro...", Toast.LENGTH_SHORT).show()
     }
   }
 
